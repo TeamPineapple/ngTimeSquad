@@ -60,10 +60,11 @@ var cardFactory = {
 				var out = Object.create(this.card);
 				out.name = 'Mother Rat';
 				out.onDeath = function(pile, player) {
-					pile.addCard(cardFactory.get.rat(false));
-					pile.addCard(cardFactory.get.rat(false));
-					pile.addCard(cardFactory.get.rat(false));
-					pile.addCard(cardFactory.get.rat(false));
+					var table = pile.table;
+					var newPile = table.addPile();
+					newPile.addCard(cardFactory.get.rat(true));
+					newPile.addCard(cardFactory.get.rat(true));
+					newPile.addCard(cardFactory.get.rat(false));
 				}
 
 				out.onPlayerAction = function(pile, player) {
