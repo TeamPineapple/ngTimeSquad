@@ -99,6 +99,27 @@ var DM = {
 	}
 };
 
+function CardPile (CardTableService) {
+	this.table = CardTableService;
+	this.cards = [];
+
+	this.addCard = function (card) {				
+		this.cards[this.cards.length] = Object.create(card); 
+	};
+
+	this.removeCard = function(card) {
+		this.cards.splice(this.cards.indexOf(card), 1);
+		if(this.cards.length > 0) {
+			var nextCard = this.cards[this.cards.length - 1];
+			if(nextCard.reverse) {
+				nextCard.reverse = false;
+				console.log('WHAT', this.table.currentPlayer)
+				nextCard.onFlip(this, this.table.currentPlayer);
+			}
+		}
+	}
+}
+
 app.service('CardTableService',  function(){
 	return {
 		piles : [],
@@ -106,6 +127,7 @@ app.service('CardTableService',  function(){
 		currentPlayerIdx : -1,
 		currentPlayerName : '',
 		nextTurn: function() {
+			console.log(this.piles);
 			this.currentPlayerIdx = (this.currentPlayerIdx + 1) %  this.players.length;
 			this.currentPlayerName = this.players[this.currentPlayerIdx].name;
 			this.currentPlayer = this.players[this.currentPlayerIdx];
@@ -113,9 +135,13 @@ app.service('CardTableService',  function(){
 				this.currentPlayer.onTurn(this);
 			}
 		},
+		addPile: function() {
+			this.piles[this.piles.length] = new CardPile(this);
+			return this.piles[this.piles.length - 1];
+		},
 		nextPlayerName :  function() {
 			return this.players[ (this.currentPlayerIdx + 1) %  this.players.length].name;
-		},
+		}
 }
 });
 
@@ -127,6 +153,8 @@ app.directive('dm',  function(CardTableService){
 		replace : true,
 	 	templateUrl: 'tmpl/dm.html',
 		link: function($scope, iElm, iAttrs, controller) {
+			CardTableService.addPile();
+
 			$scope.currentPlayerName = '';
 			$scope.nextTurn = function() {
 				CardTableService.nextTurn();
@@ -163,9 +191,23 @@ app.directive('card',  function(CardTableService){
 		link: function($scope, iElm, iAttrs, controller) {
 
 			$scope.playerTrigger = function(card) {	
+				console.log($scope);
 				if(CardTableService.currentPlayer.name === 'DM') return;
-				card.onPlayerAction($scope.$parent, CardTableService.currentPlayer);
+				card.onPlayerAction($scope.$parent.pile, CardTableService.currentPlayer);
 			}
+		}
+	};
+});
+
+
+app.directive('cardTable',  function(CardTableService){
+	// Runs during compile
+	return {
+		replace: true,
+		templateUrl: 'tmpl/card-table.html',
+		restrict: 'E',
+		link: function($scope, iElm, iAttrs, controller) {
+			$scope.table = CardTableService;
 		}
 	};
 });
@@ -178,23 +220,8 @@ app.directive('cardPile',  function(CardTableService){
 		templateUrl: 'tmpl/card-pile.html',
 		restrict: 'E',
 		link: function($scope, iElm, iAttrs, controller) {
-			CardTableService.piles[CardTableService.piles.length] = $scope;
-			$scope.cards = [];
-	
-			$scope.addCard = function (card) {				
-				$scope.cards[$scope.cards.length] = Object.create(card); 
-			};
-
-			$scope.removeCard = function(card) {
-				$scope.cards.splice($scope.cards.indexOf(card), 1);
-				if($scope.cards.length > 0) {
-					var nextCard = $scope.cards[$scope.cards.length - 1];
-					if(nextCard.reverse) {
-						nextCard.reverse = false;
-						nextCard.onFlip(this, CardTableService.currentPlayer);
-					}
-				}
-			}
+			$scope.pile = $scope.$parent.pile;
+			$scope.cards = $scope.$parent.pile.cards;
 		}
 	};
 });
