@@ -61,7 +61,7 @@ var cardFactory = {
 				out.name = 'Mother Rat';
 				out.onDeath = function(pile, player) {
 					var table = pile.table;
-					for(var i = 0; i < 3; i++) {
+					for(var i = 0; i < 1; i++) {
 						var newPile = table.addPile();
 						newPile.addCard(cardFactory.get.rat(false));
 
@@ -91,7 +91,10 @@ cardFactory.get.card = cardFactory.card;
 var DM = {
 	name : 'DM',
 	onTurn : function(table) {
-		table.addPile();
+		if(table.piles.length < 3) {
+			table.addPile();
+			
+		}
 		for (var i = table.piles.length - 1; i >= 0; i--) {
 			table.piles[i].addCard(cardFactory.get.spikeball(true));
 			table.piles[i].addCard(cardFactory.get.mother(false));
@@ -130,7 +133,6 @@ app.service('CardTableService',  function(){
 		currentPlayerIdx : -1,
 		currentPlayerName : '',
 		nextTurn: function() {
-			console.log(this.piles);
 			this.currentPlayerIdx = (this.currentPlayerIdx + 1) %  this.players.length;
 			this.currentPlayerName = this.players[this.currentPlayerIdx].name;
 			this.currentPlayer = this.players[this.currentPlayerIdx];
