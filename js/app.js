@@ -89,10 +89,8 @@ cardFactory.get.card = cardFactory.card;
 var DM = {
 	name : 'DM',
 	onTurn : function(table) {
+		table.addPile();
 		for (var i = table.piles.length - 1; i >= 0; i--) {
-
-
-			
 			table.piles[i].addCard(cardFactory.get.spikeball(true));
 			table.piles[i].addCard(cardFactory.get.mother(false));
 		};
@@ -117,6 +115,8 @@ function CardPile (CardTableService) {
 				console.log('WHAT', this.table.currentPlayer)
 				nextCard.onFlip(this, this.table.currentPlayer);
 			}
+		} else {
+			this.table.piles.splice(this.table.piles.indexOf(this), 1);
 		}
 	}
 }
@@ -154,8 +154,6 @@ app.directive('dm',  function(CardTableService){
 		replace : true,
 	 	templateUrl: 'tmpl/dm.html',
 		link: function($scope, iElm, iAttrs, controller) {
-			CardTableService.addPile();
-
 			$scope.currentPlayerName = '';
 			$scope.nextTurn = function() {
 				CardTableService.nextTurn();
