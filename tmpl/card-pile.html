@@ -1,3 +1,3 @@
 <div class="cell card-pile" ng-class="{ 'empty' : cards.length == 0 }">
-    <card ng-repeat="card in cards"></card>
+    <card ng-repeat="card in cards" style="top: {{ $index * 20 }}px; left: {{ $index * 8 }}px;"></card>
 </div>

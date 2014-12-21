@@ -1,8 +1,7 @@
 <div 
  ng-class="{'reverse': card.reverse}"
     class="card" 
-    ng-click="playerTrigger(card)"
-    style="top: {{ $index * 20 }}px; left: {{ $index * 8 }}px;">
+    ng-click="playerTrigger(card)">
         <div ng-hide="card.reverse">
                 <span class="name">
             {{ card.name }}
