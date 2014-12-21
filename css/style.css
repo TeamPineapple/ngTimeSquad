@@ -1,0 +1,110 @@
+body {
+	background: url(bg.jpg);
+}
+
+header,footer{
+	font-family: sans-serif;
+	color: #fff;
+	background: rgba(0,0,0,.4);
+	position: absolute;
+	height: 20px;
+	padding: 10px 20px;
+
+	box-shadow: rgba(0,0,0,.4) 0px 2px 5px;
+}
+
+footer{
+	bottom: 0;
+	right: 0;
+	left: 0;
+	box-shadow: rgba(0,0,0,.4) 0px -2px 5px;
+}
+header {
+	top: 0;
+	right: 0;
+	left: 0;
+	box-shadow: rgba(0,0,0,.4) 0px 2px 5px;
+}
+
+
+.cell {
+	display: inline-block;
+}
+
+.card-row {
+	width: 100%;
+	height: 330px;
+	text-align: center;
+	margin-top:130px;
+}
+
+.card-pile {
+	margin: 5px 35px;
+	width: 200px;
+	height: 200px;
+	position: relative;
+}
+
+.card-pile.empty {
+	width: 190px;
+	height: 190px;
+
+	border: 5px dashed rgba(0,0,0,.1);
+	border-radius: 4px;
+}
+
+.card {
+	width: 190px;
+	height: 250px;
+	background: #fff;
+	border-radius: 3px;
+	position: absolute;
+	box-shadow: rgba(0,0,0,.3) 0px 0px 4px;
+}
+
+.card-pile .card:last-child {
+	left:15px;
+}
+
+.card-pile .card:last-child:hover {
+	box-shadow: rgba(0,0,0,.3) 0px 0px 14px;
+	cursor: pointer;
+}
+
+.card .name {
+	font-weight: bold;
+	font-size: 28px;
+	padding: 10px 10px;
+	display: block;
+	position: absolute;
+	top:0;
+	right: 0;
+	left: 0;
+	font-family: 'Libre Baskerville', serif;
+	text-align: center;
+}
+
+
+.card .stats {
+	font-weight: bold;
+	font-size: 28px;
+	padding: 5px 10px;
+	display: block;
+	position: absolute;
+	bottom:0;
+	right: 0;
+	left: 0;
+	text-align: center;
+}
+
+.card.reverse {
+	background: center center url('reverse.jpg');
+}
+
+#hand {
+	width: 400px;
+	height: 300px;
+	position: absolute;
+	right: 0;
+	bottom:0;
+}

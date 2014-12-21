@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<script src="lib/angular/angular.js"></script>
+	<link href='http://fonts.googleapis.com/css?family=Libre+Baskerville:400,700' rel='stylesheet' type='text/css'>
+
+	<link rel="stylesheet" href="css/style.css">
+</head>
+<body ng-app="timesquad" ng-controller="table">
+	<header>
+		<button ng-click="nextTurn()">Next Turn</button>
+		&mdash;
+		Current Turn: {{ currentPlayerName }}
+	</header>
+
+	<div class="card-row">
+		<card-pile ></card-pile>
+		<card-pile ></card-pile>
+	</div>
+
+	<player></player>
+	<script type="text/javascript" src="js/app.js"></script>
+</body>
+</html>
