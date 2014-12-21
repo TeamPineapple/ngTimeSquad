@@ -51,20 +51,22 @@ var cardFactory = {
 						pile.removeCard(this);
 					}
 				};
-
+				out.image = 'rat.jpg';
 				out.reverse = reverse;
 				return out;
 		},
 
 		mother : function getMotherRat (reverse) {
-				var out = Object.create(this.card);
+				var out = Object.create(this.rat());
 				out.name = 'Mother Rat';
 				out.onDeath = function(pile, player) {
 					var table = pile.table;
-					var newPile = table.addPile();
-					newPile.addCard(cardFactory.get.rat(true));
-					newPile.addCard(cardFactory.get.rat(true));
-					newPile.addCard(cardFactory.get.rat(false));
+					for(var i = 0; i < 3; i++) {
+						var newPile = table.addPile();
+						newPile.addCard(cardFactory.get.rat(false));
+
+					}
+					
 				}
 
 				out.onPlayerAction = function(pile, player) {
